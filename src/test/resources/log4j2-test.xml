@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="filename">target/logging-testo.log</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+		<File name="Log" fileName="${filename}">
+			<PatternLayout pattern="%d %p %C{1.} [%t] %m%n" />
+		</File>
+	</Appenders>
+	<Loggers>
+		<Root level="DEBUG">
+			<AppenderRef ref="Console" level="INFO" />
+			<AppenderRef ref="Log" level="WARN" />
+		</Root>
+		<logger name="only.you.august.logging.a" level="TRACE"
+			additivity="false">
+			<AppenderRef ref="Log" />
+		</logger>
+		<logger name="only.you.august.logging.b" level="ERROR"
+			additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="Log" />
+		</logger>
+		<!-- <logger name="only.you.august.logging.b.c" level="TRACE"
+			additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="Log" />
+		</logger>-->
+	</Loggers>
+</Configuration>
