@@ -3,6 +3,7 @@
 	<Properties>
 		<Property name="filename">target/logging-testo.log</Property>
 		<Property name="dynamicProxyFileName">target/dynamicProxy-testo.log</Property>
+		<Property name="confidentialFileName">target/confidential.log</Property>
 	</Properties>
 	<Appenders>
 		<Console name="Console">
@@ -14,15 +15,20 @@
 		<File name="DynamicProxyLog" fileName="${dynamicProxyFileName}">
 			<PatternLayout pattern="%d [%p] %m%n" />
 		</File>
+		<File name="confidentialLog" fileName="${confidentialFileName}">
+			<PatternLayout pattern="%d [%p] %m%n" />
+			<MarkerFilter marker="CONFIDENTIAL" onMatch="ACCEPT" onMismatch="DENY"/>
+		</File>
 	</Appenders>
 	<Loggers>
 		<Root level="DEBUG">
 			<AppenderRef ref="Console" level="INFO" />
-			<AppenderRef ref="Log" level="ERROR" />
+			<AppenderRef ref="Log" level="ERROR" />			
 		</Root>
-		<logger name="only.you.august.dynproxy" level="TRACE"
+		<logger name="only.you.august.dynproxy" level="INFO"
 			additivity="false">
 			<AppenderRef ref="DynamicProxyLog" />
+			<AppenderRef ref="confidentialLog" level="DEBUG" />
 		</logger>
 		<logger name="only.you.august.logging.a" level="TRACE"
 			additivity="false">
@@ -33,10 +39,7 @@
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="Log" />
 		</logger>
-		<!-- <logger name="only.you.august.logging.b.c" level="TRACE"
-			additivity="false">
-			<AppenderRef ref="Console" />
-			<AppenderRef ref="Log" />
-		</logger>-->
+		<!-- <logger name="only.you.august.logging.b.c" level="TRACE" additivity="false"> 
+			<AppenderRef ref="Console" /> <AppenderRef ref="Log" /> </logger> -->
 	</Loggers>
 </Configuration>
