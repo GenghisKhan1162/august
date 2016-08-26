@@ -8,12 +8,7 @@ import only.you.august.logging.b.c.C;
 public class App 
 {
     public static void main( String[] args )
-    {
-    	new R();
-    	new A();
-    	new B();
-    	new C();
-    	
+    {  	
     	System.out.println( "It's over!!!" );
     }
 }

@@ -2,6 +2,7 @@
 <Configuration>
 	<Properties>
 		<Property name="filename">target/logging-testo.log</Property>
+		<Property name="dynamicProxyFileName">target/dynamicProxy-testo.log</Property>
 	</Properties>
 	<Appenders>
 		<Console name="Console">
@@ -10,12 +11,19 @@
 		<File name="Log" fileName="${filename}">
 			<PatternLayout pattern="%d %p %C{1.} [%t] %m%n" />
 		</File>
+		<File name="DynamicProxyLog" fileName="${dynamicProxyFileName}">
+			<PatternLayout pattern="%d [%p] %m%n" />
+		</File>
 	</Appenders>
 	<Loggers>
 		<Root level="DEBUG">
 			<AppenderRef ref="Console" level="INFO" />
-			<AppenderRef ref="Log" level="WARN" />
+			<AppenderRef ref="Log" level="ERROR" />
 		</Root>
+		<logger name="only.you.august.dynproxy" level="TRACE"
+			additivity="false">
+			<AppenderRef ref="DynamicProxyLog" />
+		</logger>
 		<logger name="only.you.august.logging.a" level="TRACE"
 			additivity="false">
 			<AppenderRef ref="Log" />

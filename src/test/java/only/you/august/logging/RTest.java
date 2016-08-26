@@ -1,7 +1,6 @@
 package only.you.august.logging;
 
-import static org.junit.Assert.*;
-
+import org.junit.Ignore;
 import org.junit.Test;
 
 import only.you.august.logging.a.A;
@@ -10,9 +9,10 @@ import only.you.august.logging.b.c.C;
 
 public class RTest {
 
+	// should be logged in target/logging-testo.log
+	@Ignore
 	@Test
-	public void test() {
-		// should log in target/logging-testo.log
+	public void ShouldBeLoggedInLoggingTesto() {		
 		new R();
     	new A();
     	new B();
