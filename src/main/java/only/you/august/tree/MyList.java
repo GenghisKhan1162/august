@@ -4,45 +4,50 @@ import java.security.InvalidParameterException;
 import java.util.Collections;
 import java.util.Iterator;
 
-public class MyList implements ILinkedList {
+public class MyList<T> implements ILinkedList<T> {
 
 	
 	private int _size = 0;
 
-	private Node _head = new Node(null, null);
+	private Node<T> _head = new Node<T>(null, null);
 
-	private static class Node {
-		public String value;
-		public Node next;
+	private static class Node<T> {
+		public T value;
+		public Node<T> next;
 		
-		public Node(String _value, Node _next) {
+		public Node(T _value, Node<T> _next) {
 			this.value = _value;
 			this.next = _next;
 		}	
 		
 	}
 	
-	private class Iterra implements Iterator<String>{
+	private class Iterra<R> implements Iterator<R>{
 
-		private Node currentPosition = _head;
+		@SuppressWarnings("unchecked")
+		private Node<R> _currentPosition;
+		
+		public Iterra(Node<R> startFrom){
+			_currentPosition = startFrom;
+		}
 		
 		@Override
 		public boolean hasNext() {
-			return currentPosition.next != null;
+			return _currentPosition.next != null;
 		}
 
 		@Override
-		public String next() {
-			String result = currentPosition.next.value;
-			currentPosition = currentPosition.next;
+		public R next() {
+			R result = _currentPosition.next.value;
+			_currentPosition = _currentPosition.next;
 			return result;
 		}
 		
 	}
 
 	@Override
-	public Iterator<String> iterator() {		
-		return new Iterra();
+	public Iterator<T> iterator() {		
+		return new Iterra<T>(_head);
 	}
 
 	@Override
@@ -56,18 +61,18 @@ public class MyList implements ILinkedList {
 	}
 
 	@Override
-	public void add(String item) {
-		Node cursor = _head;
+	public void add(T item) {
+		Node<T> cursor = _head;
 		while (cursor.next != null) {
 			cursor = cursor.next;
 		}
-		cursor.next = new Node(item, null);
+		cursor.next = new Node<T>(item, null);
 		_size++;
 	}
 
 	@Override
-	public boolean remove(String item) {
-		Node cursor = _head;
+	public boolean remove(T item) {
+		Node<T> cursor = _head;
 		while(cursor.next != null){
 			if (cursor.next.value == item){
 				cursor.next = cursor.next.next;
@@ -80,8 +85,8 @@ public class MyList implements ILinkedList {
 	}
 
 	@Override
-	public boolean contains(String item) {
-		Node cursor = _head.next;
+	public boolean contains(T item) {
+		Node<T> cursor = _head.next;
 		while (cursor != null) {
 			if (cursor.value == item)
 				return true;
@@ -97,10 +102,10 @@ public class MyList implements ILinkedList {
 	}
 
 	@Override
-	public String[] toArray() {
-		String[] result = new String[_size];
+	public Object[] toArray() {
+		Object[] result = new Object[_size];
 		int index = 0;
-		Node cursor = _head.next;
+		Node<T> cursor = _head.next;
 		while (cursor != null) {
 			result[index++] = cursor.value;
 			cursor = cursor.next;
@@ -109,8 +114,8 @@ public class MyList implements ILinkedList {
 	}
 
 	@Override
-	public int indexOf(String item) {
-		Node cursor = _head.next;
+	public int indexOf(T item) {
+		Node<T> cursor = _head.next;
 		int index = 0;
 		while(cursor != null){
 			if (cursor.value == item)
@@ -122,8 +127,8 @@ public class MyList implements ILinkedList {
 	}
 
 	@Override
-	public int lastIndexOf(String item) {
-		Node cursor = _head.next;
+	public int lastIndexOf(T item) {
+		Node<T> cursor = _head.next;
 		int result = -1;
 		int index = 0;
 		while(cursor != null){
@@ -137,24 +142,24 @@ public class MyList implements ILinkedList {
 	}
 	
 	@Override
-	public void insert(int index, String item) {
+	public void insert(int index, T item) {
 		if (index < 0 || index >= _size)
 			throw new InvalidParameterException();
-		Node cursor = _head;
+		Node<T> cursor = _head;
 		int current = 0;
 		while(cursor != null && current++ < index){
 			cursor = cursor.next;
 		}
-		Node n = new Node(item, cursor.next);
+		Node<T> n = new Node<T>(item, cursor.next);
 		cursor.next = n;
 		_size++;
 	}
 
 	@Override
-	public String get(int index) {
+	public T get(int index) {
 		if (index < 0 || index >= _size)
 			throw new InvalidParameterException();
-		Node cursor = _head.next;
+		Node<T> cursor = _head.next;
 		int current = 0;
 		while(cursor != null){
 			if (current++ == index)
@@ -169,7 +174,7 @@ public class MyList implements ILinkedList {
 	@Override
 	public String toString() {
 		String result = "{";
-		Node cursor = _head.next;
+		Node<T> cursor = _head.next;
 		while(cursor != null){
 			result += cursor.value.toString();
 			if (cursor.next != null){

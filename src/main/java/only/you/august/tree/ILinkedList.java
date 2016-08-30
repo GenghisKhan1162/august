@@ -1,16 +1,16 @@
 package only.you.august.tree;
 
-public interface ILinkedList extends Iterable<String>{
+public interface ILinkedList<T> extends Iterable<T>{
 
 	int size();
 	boolean isEmpty();
-	void add(String item);
-	void insert(int index, String item);
-	boolean remove(String item);
-	boolean contains(String item);
+	void add(T item);
+	void insert(int index, T item);
+	boolean remove(T item);
+	boolean contains(T item);
 	void clear();
-	String[] toArray();
-	int indexOf(String item);
-	int lastIndexOf(String item);
-	String get(int index);
+	Object[] toArray();
+	int indexOf(T item);
+	int lastIndexOf(T item);
+	T get(int index);
 }

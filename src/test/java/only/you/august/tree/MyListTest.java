@@ -10,13 +10,12 @@ import org.junit.Test;
 
 public class MyListTest {
 
-	private ILinkedList _list;
+	private ILinkedList<String> _list;
 
 	@Before
 	public void _initialize() {
-		_list = new MyList();
+		_list = new MyList<String>();
 	}
-
 	@Test
 	public void _one() {
 		assertThat(_list.size(), equalTo(0));
@@ -73,7 +72,7 @@ public class MyListTest {
 		String[] from = new String[] { "zero", "one", "two", "three", "four", "five" };
 		for (String s : from)
 			_list.add(s);
-		String[] to = _list.toArray();
+		Object[] to = _list.toArray();
 		assertThat(from.length, equalTo(to.length));
 		for (int i = 0; i < to.length; i++) {
 			assertThat(from[i], equalTo(to[i]));
